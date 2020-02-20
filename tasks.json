@@ -1,0 +1,142 @@
+[
+    {
+        "TASK NAME": "Basic Sensors for Fall Detection",
+        "START DATE": "3 Feb",
+        "END DATE": "7 Feb",
+        "DURATION (WORK DAYS)": "5",
+        "TEAM MEMBER": "All"
+    },
+    {
+        "TASK NAME": "Acquire Sensors",
+        "START DATE": "3 Feb",
+        "END DATE": "6 Mar",
+        "DURATION (WORK DAYS)": "34",
+        "TEAM MEMBER": "All"
+    },
+    {
+        "TASK NAME": "Activity Level Metrics Research",
+        "START DATE": "12 Feb",
+        "END DATE": "19 Feb",
+        "DURATION (WORK DAYS)": "8",
+        "TEAM MEMBER": "YC, TM"
+    },
+    {
+        "TASK NAME": "Cloud Solutions Research",
+        "START DATE": "12 Feb",
+        "END DATE": "17 Feb",
+        "DURATION (WORK DAYS)": "6",
+        "TEAM MEMBER": "ISTD (JD lead)"
+    },
+    {
+        "TASK NAME": "Infineon Radar Testing and Learning",
+        "START DATE": "12 Feb",
+        "END DATE": "21 Feb",
+        "DURATION (WORK DAYS)": "10",
+        "TEAM MEMBER": "X, TM, TT"
+    },
+    {
+        "TASK NAME": "mmWave TI Radar Learning",
+        "START DATE": "17 Feb",
+        "END DATE": "24 Feb",
+        "DURATION (WORK DAYS)": "8",
+        "TEAM MEMBER": "X, TM, TT"
+    },
+    {
+        "TASK NAME": "mmWave TI Radar Fall Detection Algo",
+        "START DATE": "21 Feb",
+        "END DATE": "6 Mar",
+        "DURATION (WORK DAYS)": "16",
+        "TEAM MEMBER": "X, TM, TT"
+    },
+    {
+        "TASK NAME": "Design and build fall inducing setup for data gathering",
+        "START DATE": "16 Feb",
+        "END DATE": "23 Feb",
+        "DURATION (WORK DAYS)": "7",
+        "TEAM MEMBER": "EPD (TM lead)"
+    },
+    {
+        "TASK NAME": "Collect data for activity levels",
+        "START DATE": "24 Feb",
+        "END DATE": "28 Feb",
+        "DURATION (WORK DAYS)": "4",
+        "TEAM MEMBER": "ISTD"
+    },
+    {
+        "TASK NAME": "Design pre-survey for gathering sentiment of solution ",
+        "START DATE": "1 Mar",
+        "END DATE": "6 Mar",
+        "DURATION (WORK DAYS)": "5",
+        "TEAM MEMBER": "KJ, TT, SW"
+    },
+    {
+        "TASK NAME": "Design post-survey for gathering effectiveness of solution",
+        "START DATE": "1 Mar",
+        "END DATE": "6 Mar",
+        "DURATION (WORK DAYS)": "5",
+        "TEAM MEMBER": "KJ, TT, SW"
+    },
+    {
+        "TASK NAME": "Design Customer Journey Map",
+        "START DATE": "1 Mar",
+        "END DATE": "6 Mar",
+        "DURATION (WORK DAYS)": "5",
+        "TEAM MEMBER": "SW"
+    },
+    {
+        "TASK NAME": "Classification of activity levels via sensor data (Not ML)",
+        "START DATE": "2 Mar",
+        "END DATE": "2 Apr",
+        "DURATION (WORK DAYS)": "30",
+        "TEAM MEMBER": "ISTD"
+    },
+    {
+        "TASK NAME": "Collect data/classification for falls (Radar)",
+        "START DATE": "6 Mar",
+        "END DATE": "28 Mar",
+        "DURATION (WORK DAYS)": "22",
+        "TEAM MEMBER": "X, TM, ISTD"
+    },
+    {
+        "TASK NAME": "Collect data/classification for falls (PIR/Grideye)",
+        "START DATE": "6 Mar",
+        "END DATE": "28 Mar",
+        "DURATION (WORK DAYS)": "22",
+        "TEAM MEMBER": "KJ, TT, ISTD"
+    },
+    {
+        "TASK NAME": "Visualization of the activity levels",
+        "START DATE": "25 Mar",
+        "END DATE": "28 Mar",
+        "DURATION (WORK DAYS)": "3",
+        "TEAM MEMBER": "All"
+    },
+    {
+        "TASK NAME": "Program the submission of raw sensor data into cloud, prototype cloud pipeline to collect sensor data\n",
+        "START DATE": "15 Mar",
+        "END DATE": "30 Mar",
+        "DURATION (WORK DAYS)": "15",
+        "TEAM MEMBER": "ISTD"
+    },
+    {
+        "TASK NAME": "Exploring available metrics for measuring the computational requirements of code / pipeline",
+        "START DATE": "30 Mar",
+        "END DATE": "3 Apr",
+        "DURATION (WORK DAYS)": "4",
+        "TEAM MEMBER": "ISTD"
+    },
+    {
+        "TASK NAME": "Review 1",
+        "START DATE": "8 Mar",
+        "END DATE": "14 Mar",
+        "DURATION (WORK DAYS)": "5",
+        "TEAM MEMBER": "All"
+    },
+    {
+        "TASK NAME": "Review 2",
+        "START DATE": "15 Apr",
+        "END DATE": "22 Apr",
+        "DURATION (WORK DAYS)": "7",
+        "TEAM MEMBER": "All"
+    }
+]
