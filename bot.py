@@ -97,11 +97,14 @@ def trello_member_selected(update, context):
                                  for id in task.members if id != requested_member_id]
         message.append(f"{i+1}. *{task.name}*")
         if task.due:
-            message.append(
-                f"    🔗[link]({task.shortUrl}) _Due {DATE_HELPER.convert_datetime_to_string(task.due)}_.    \n   🍻({partners_on_same_task})\n")
+            formatted_text = (
+                f"    🔗[link]({task.shortUrl}) _Due {DATE_HELPER.convert_datetime_to_string(task.due)}_.\n")
         else:
-            message.append(
-                f"    🔗[link]({task.shortUrl})\n    🍻({partners_on_same_task})\n")
+            formatted_text = (
+                f"    🔗[link]({task.shortUrl})\n")
+        if len(partners_on_same_task):
+            formatted_text += f"    🍻({partners_on_same_task})\n"
+        message.append(formatted_text)
 
     query.edit_message_text(text="\n".join(
         message), parse_mode=ParseMode.MARKDOWN)

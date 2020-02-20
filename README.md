@@ -4,13 +4,16 @@
 
 This bot allows you to perform:
 
-- Google Sheets Gantt chart Tracking using [gspread](https://github.com/burnash/gspread)
+- Google Sheets Gantt Chart Tracking using [gspread](https://github.com/burnash/gspread)
 - Trello Tasks Tracking
 
 ## Telegram Commands
 
-- `/gantt` for weekly update
+- `/gantt` for current week updates
+- `/trello` for selecting a group member and viewing uncompleted tasks assigned to them.
 
 ## Setup instructions 
 
-Currently the bot is deployed on an Ubuntu machine and running permanantly via `tmux`.
+### Deployment
+
+Make your shell run the bot forever or deploy it via an Ubuntu machine and running permanantly via `tmux`.
