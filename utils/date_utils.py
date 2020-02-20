@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import datetime
-from json_utils import read_json
+from utils.json_utils import read_json
 
 
 class DateUtils():
@@ -43,8 +43,12 @@ class DateUtils():
         week, i = self.get_week(today, output_week_number=True)
         return i
 
+    def convert_datetime_to_string(self, obj):
+        parsed_date = datetime.datetime.strptime(obj, "%Y-%m-%dT%H:%M:%S.%fZ")
+        return f"{parsed_date.day} {parsed_date.strftime('%B')}"
+
     def get_tasks_by_week(self, week_number: int):
-        tasks = read_json('tasks.json')
+        tasks = read_json('data/tasks.json')
         queried_tasks = []
         for task in tasks:
             start = DATE_HELPER.get_datetime(task["START DATE"])
@@ -66,5 +70,5 @@ class DateUtils():
 
 CAPSTONE_START_DAY = datetime.datetime(2020, 2, 3)
 DATE_HELPER = DateUtils(CAPSTONE_START_DAY, 12, start_week=2)
-CURRENT_WEEK_NUMBER = DATE_HELPER.current_week_number()
-CURRENT_WEEK_TASKS = DATE_HELPER.get_tasks_by_week(CURRENT_WEEK_NUMBER)
+# CURRENT_WEEK_NUMBER = DATE_HELPER.current_week_number()
+# CURRENT_WEEK_TASKS = DATE_HELPER.get_tasks_by_week(CURRENT_WEEK_NUMBER)

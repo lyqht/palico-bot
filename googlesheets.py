@@ -1,7 +1,7 @@
 from settings import SHEETS_ID
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread
-from json_utils import write_to_json
+from utils.json_utils import write_to_json
 
 
 def get_ganttchart():
@@ -36,11 +36,10 @@ def main():
     tasks = []
 
     num_tasks = len(items[headers[0]])
-    print("Number of tasks in gantt chart found: ", num_tasks)
     for i in range(num_tasks):
         task = {}
         for header in headers:
             task[header] = items[header][i]
         tasks.append(task)
 
-    write_to_json(tasks)
+    write_to_json(tasks, "data/tasks.json")

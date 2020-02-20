@@ -1,8 +1,8 @@
 import json
 
 
-def write_to_json(data):
-    with open('tasks.json', 'w') as f:
+def write_to_json(data, filePath):
+    with open(filePath, 'w') as f:
         json.dump(data, f)
 
 
