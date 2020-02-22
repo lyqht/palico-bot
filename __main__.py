@@ -1,7 +1,7 @@
 import logging
 import os.path
 import sys
-from settings import PORT, HEROKU_APP_NAME, BOT_TOKEN, OPERATION_MODE
+from settings import PORT, HEROKU_APP_NAME, BOT_TOKEN, OPERATION_MODE, print_variables
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 from bot import start_handler, gantt_curr_week_handler, trello_tasks_handler, unknown_handler, trello_member_selected_callback
 
@@ -16,9 +16,12 @@ if __name__ == "__main__":
 
     if OPERATION_MODE == "dev":
         def run(updater):
+            print("Running in development mode")
             updater.start_polling()
     elif OPERATION_MODE == "prod":
         def run(updater):
+            print("Running in production mode")
+            print_variables()
             updater.start_webhook(listen="0.0.0.0",
                                   port=PORT,
                                   url_path=BOT_TOKEN)
