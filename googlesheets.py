@@ -1,14 +1,22 @@
-from settings import SHEETS_ID
+from settings import SHEETS_ID, GOOGLE_PRIVATE_KEY_ID, GOOGLE_PRIVATE_KEY, GOOGLE_CLIENT_EMAIL, GOOGLE_CLIENT_ID
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 from utils.json_utils import write_to_json
+
+TASKS_DATA_PATH = "data/tasks.json"
 
 
 def get_ganttchart():
     SCOPE = ['https://spreadsheets.google.com/feeds',
              'https://www.googleapis.com/auth/drive']
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(
-        'credentials.json', SCOPE)
+    credentials = ServiceAccountCredentials.from_json_keyfile_dict(
+        {
+            "type": "service_account",
+            "private_key_id": GOOGLE_PRIVATE_KEY_ID,
+            "private_key": GOOGLE_PRIVATE_KEY,
+            "client_email": GOOGLE_CLIENT_EMAIL,
+            "client_id": GOOGLE_CLIENT_ID,
+        }, SCOPE)
     gc = gspread.authorize(credentials)
     sheet = gc.open_by_key(SHEETS_ID)
     worksheet = sheet.get_worksheet(0)
@@ -42,4 +50,4 @@ def main():
             task[header] = items[header][i]
         tasks.append(task)
 
-    write_to_json(tasks, "data/tasks.json")
+    write_to_json(tasks, TASKS_DATA_PATH)
