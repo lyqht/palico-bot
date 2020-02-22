@@ -21,7 +21,8 @@ if __name__ == "__main__":
     elif OPERATION_MODE == "prod":
         def run(updater):
             print("Running in production mode")
-            print_variables()
+            if not os.path.exists('data'):
+                os.mkdirs('data')
             updater.start_webhook(listen="0.0.0.0",
                                   port=PORT,
                                   url_path=BOT_TOKEN)

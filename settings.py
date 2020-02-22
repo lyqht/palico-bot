@@ -21,10 +21,3 @@ PORT = int(os.getenv("PORT"))
 OPERATION_MODE = os.getenv("OPERATION_MODE")
 
 TESTMEMBER_ID = os.getenv("TESTMEMBER_ID")
-
-
-def print_variables():
-    print(BOT_TOKEN)
-    print(TRELLO_TOKEN)
-    print(TRELLO_KEY)
-    print(GOOGLE_PRIVATE_KEY)
