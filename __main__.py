@@ -1,21 +1,22 @@
 import logging
 import os.path
 import sys
-from settings import PORT, HEROKU_APP_NAME, BOT_TOKEN, OPERATION_MODE
-from telegram.ext import (
-    Updater,
-    CommandHandler,
-    MessageHandler,
-    Filters,
-    CallbackQueryHandler,
-)
-from bot import (
-    start_handler,
-    gantt_curr_week_handler,
-    trello_tasks_handler,
-    unknown_handler,
-    trello_member_selected_callback,
-)
+
+from telegram.ext import CallbackQueryHandler
+from telegram.ext import CommandHandler
+from telegram.ext import Filters
+from telegram.ext import MessageHandler
+from telegram.ext import Updater
+
+from bot import gantt_curr_week_handler
+from bot import start_handler
+from bot import trello_member_selected_callback
+from bot import trello_tasks_handler
+from bot import unknown_handler
+from settings import BOT_TOKEN
+from settings import HEROKU_APP_NAME
+from settings import OPERATION_MODE
+from settings import PORT
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
