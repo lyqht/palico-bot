@@ -34,12 +34,12 @@ class DateUtils():
         return "No week range found for this workday, is this a weekend?"
 
     def current_week(self):
-        today = datetime.datetime.today()
+        today = datetime.datetime.today().date()
         week = self.get_week(today)
         return week
 
     def current_week_number(self):
-        today = datetime.datetime.today()
+        today = datetime.datetime.now().date()
         week, i = self.get_week(today, output_week_number=True)
         return i
 
@@ -70,5 +70,6 @@ class DateUtils():
 
 CAPSTONE_START_DAY = datetime.datetime(2020, 2, 3)
 DATE_HELPER = DateUtils(CAPSTONE_START_DAY, 12, start_week=2)
-# CURRENT_WEEK_NUMBER = DATE_HELPER.current_week_number()
+
+CURRENT_WEEK_NUMBER = DATE_HELPER.current_week_number()
 # CURRENT_WEEK_TASKS = DATE_HELPER.get_tasks_by_week(CURRENT_WEEK_NUMBER)
