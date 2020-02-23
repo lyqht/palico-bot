@@ -1,11 +1,14 @@
 # palico-bot
 
+This bot was created for my capstone project to perform the features below.
+The gantt chart template that our team used specifically is the Manual Gantt Chart that can be found [here](https://www.teamgantt.com/free-gantt-chart-excel-template).
+
 ## Features
 
 This bot allows you to perform:
 
-- Google Sheets Gantt Chart Tracking using [gspread](https://github.com/burnash/gspread)
-- Trello Tasks Tracking
+- Google Sheets Gantt Chart Tracking by week
+- Trello Tasks Tracking by user
 
 ## Telegram Commands
 
