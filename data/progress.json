@@ -1,0 +1,14 @@
+[
+    {
+        "Week": 3,
+        "Achievements": ["Gantt Chart"]
+    },
+    {
+        "Week": 4,
+        "Achievements": [
+            "Adminstrative Reshuffling",
+            "Infineon Radar Test",
+            "Grideye Test"
+        ]
+    }
+]

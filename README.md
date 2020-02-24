@@ -9,11 +9,17 @@ This bot allows you to perform:
 
 - Google Sheets Gantt Chart Tracking by week
 - Trello Tasks Tracking by user
+- Send weekly reminders to your group
 
 ## Telegram Commands
 
 - `/gantt` for current week updates
 - `/trello` for selecting a group member and viewing uncompleted tasks assigned to them.
+
+<div>
+<img src="demo/gantt_chart_tasks.gif" width=300></img>
+<img src="demo/trello_tasks.gif" width=300></img>
+</div>
 
 ## Pull Requests
 
@@ -23,7 +29,7 @@ Contributions are welcome! Here are some tasks that I've in mind but yet to work
 - Add weekly reminder operation
 - Allow users to mark complete Trello tasks with confirmation prompt when they view specific user's tasks
 - Show the entire Gantt Chart somehow on Telegram
-- Let the bot reply with
+- Chronological Sorting of Cards received on Trello (All IDs on Trello are mongo IDs and can be converted to timestamps, refer [here](https://developers.trello.com/reference#boardsboardidtest))
 
 ## Setup instructions 
 
