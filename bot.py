@@ -41,8 +41,8 @@ def formatted_text_for_trello_task(task, members):
         formatted_text += f"    🍻({members})\n"
     return formatted_text
 
-# TODO:
 # def formatted_text_for_gantt_task(task):
+# TODO:
 
 
 # Handler functions
