@@ -23,9 +23,9 @@ def get_ganttchart():
     return worksheet
 
 
-headers = ["TASK NAME", "START DATE", "END DATE",
-           "DURATION (WORK DAYS)", "TEAM MEMBER"]
-noise_values = ["Exploration and acquisition",
+headers = ["TASK NAME", "START DATE",
+           "END DATE", "DAYS REMAINING", "TEAM MEMBER"]
+noise_values = ["Research, Exploration, Testing",
                 "Solution Investigation", "Reviews", "Legend:", "Radar", "Other Sensors", "Logistics/Administration"]
 
 
@@ -35,7 +35,6 @@ def main():
 
     for header in headers:
         cell = worksheet.find(header)
-        # print("Found header %s at R%sC%s" % (header, cell.row, cell.col))
         values = worksheet.col_values(cell.col)
         values = filter(lambda x: x != "" and x !=
                         header and x not in noise_values, values)
@@ -43,7 +42,8 @@ def main():
 
     tasks = []
 
-    num_tasks = len(items[headers[0]])
+    num_tasks = len(items[headers[1]])
+    print(f"Num tasks found: ${num_tasks}")
     for i in range(num_tasks):
         task = {}
         for header in headers:
@@ -51,3 +51,6 @@ def main():
         tasks.append(task)
 
     write_to_json(tasks, TASKS_DATA_PATH)
+
+
+main()

@@ -32,7 +32,6 @@ class DateUtils():
             end = pd.to_datetime(week[-1])
             if (day >= start) and (day <= end):
                 if output_week_number:
-                    print(i)
                     return (week, i+self.start_week)
                 else:
                     return week
@@ -48,7 +47,7 @@ class DateUtils():
         week, i = self.get_week(today, output_week_number=True)
         return i
 
-    def in_week_range(self, datetime):
+    def in_sprint_range(self, datetime):
         week, i = self.get_week(datetime, output_week_number=True)
         return (i - self.current_week_number()) < 2
 

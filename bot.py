@@ -67,8 +67,6 @@ def gantt_curr_week_handler(update, context: CallbackContext):
     curr_week = DATE_HELPER.current_week_number()
     tasks = DATE_HELPER.get_gantt_tasks_by_week(curr_week)
 
-    print(f"Number of tasks for the next 2 weeks: {len(tasks)}")
-
     message = ["Meow~ these are the tasks for the next 2 weeks on Gantt Chart 📚"]
     for i in range(len(tasks)):
         task = tasks[i]
@@ -143,9 +141,9 @@ def trello_member_selected_callback(update, context: CallbackContext):
 # Jobs
 
 
-def weekly_callback_alarm(context: CallbackContext):
+def weekly_reminder(update, context: CallbackContext):
     curr_week = DATE_HELPER.current_week_number()
-    WEEKLY_REMINDER_INTRO_MESSAGE = f"Ohayo meowsters! It is a start of a new week!🌻\nIt is now *Week {curr_week}*, so here are some updates!\n"
+    WEEKLY_REMINDER_INTRO_MESSAGE = f"It is now *Week {curr_week}*, and here are some updates!\n"
     tasks = trello.get_tasks_due_two_weeks()
     message = [WEEKLY_REMINDER_INTRO_MESSAGE]
 
@@ -164,7 +162,7 @@ def weekly_callback_alarm(context: CallbackContext):
                        formatted_text_for_trello_task(task, trello.translate_ids_to_names(task.members)))
 
     message.append(
-        "⚠ I'll remind the group _weekly_ about what has been happening, but things might change after this reminder! Please check out the actual [trello board](https://trello.com/b/Ap7y9llJ/capstone)/[gantt chart](https://docs.google.com/spreadsheets/d/1G65rGEH_ih8r-J82EWFCzllOlZcU7jGWzfzCZkIYgZE/edit#gid=2140549662) from time to time too 🙌 Have a wonderful week ahead meow~")
+        "⚠ Please check out the actual [trello board](https://trello.com/b/Ap7y9llJ/capstone)/[gantt chart](https://docs.google.com/spreadsheets/d/1G65rGEH_ih8r-J82EWFCzllOlZcU7jGWzfzCZkIYgZE/edit#gid=2140549662) from time to time too 🙌 Have a wonderful week ahead meow~")
 
     context.bot.send_message(
         chat_id=TELEGRAM_GROUP_CHAT_ID, text="\n".join(message), parse_mode=ParseMode.MARKDOWN)

@@ -58,7 +58,7 @@ def get_cards_due_two_weeks():
         if card["due"]:
             due_date = DATE_HELPER.get_datetime_from_card(card["due"])
             due_date = due_date.date()
-            return DATE_HELPER.in_week_range(due_date) and not card["dueComplete"]
+            return DATE_HELPER.in_sprint_range(due_date) and not card["dueComplete"]
 
     cards = filter(target_card, cards)
     return list(cards)

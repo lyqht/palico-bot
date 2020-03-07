@@ -16,6 +16,3 @@ def get_progress():
         if difference >= -2 and difference <= 0:
             list_of_progress.extend(achievement["Achievements"])
     return list_of_progress
-
-
-print(get_progress())
