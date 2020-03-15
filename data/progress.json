@@ -18,5 +18,18 @@
             "Customer Experience Journey Map",
             "Pre-survey for Customer Reception"
         ]
+    },
+    {
+        "Week": 6,
+        "Achievements": ["Review 1"]
+    },
+    {
+        "Week": 7,
+        "Achievements": [
+            "Started Preliminary Data Collection",
+            "Started AWS IoT Pipeline with Testing Framework",
+            "Internet Connection to ESP8266 Wifi chip with Arduino Uno",
+            "PIR Testing with Arduino Uno"
+        ]
     }
 ]

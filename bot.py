@@ -3,7 +3,7 @@ import os
 from telegram.ext import CallbackContext
 from telegram import ParseMode
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from settings import BOT_TOKEN, TRELLO_TOKEN, TELEGRAM_GROUP_CHAT_ID
+from settings import BOT_TOKEN, TRELLO_TOKEN, TELEGRAM_GROUP_CHAT_ID, TELEGRAM_TEST_TELEGRAM_CHAT_ID
 from utils.date_utils import DATE_HELPER
 from utils.progress_utils import get_progress
 
@@ -143,12 +143,12 @@ def trello_member_selected_callback(update, context: CallbackContext):
 
 def weekly_reminder(update, context: CallbackContext):
     curr_week = DATE_HELPER.current_week_number()
-    WEEKLY_REMINDER_INTRO_MESSAGE = f"It is now *Week {curr_week}*, and here are some updates!\n"
+    WEEKLY_REMINDER_INTRO_MESSAGE = f"It is almost *Week {curr_week+1}*, and here are some updates!\n"
     tasks = trello.get_tasks_due_two_weeks()
     message = [WEEKLY_REMINDER_INTRO_MESSAGE]
 
     message.append(
-        f"*The team's progress for Week {curr_week-2}-{curr_week-1} 🎉🎉*")
+        f"*The team's progress for Week {curr_week-1}-{curr_week} 🎉🎉*")
     list_of_progress = get_progress()
     for achievement in list_of_progress:
         message.append(f"✨ {achievement}")

@@ -71,7 +71,7 @@ def get_tasks_due_two_weeks():
 
 def make_tasks(cards):
     tasks = [Task(card['name'], card['shortUrl'], card['due'], card['idMembers'])
-             for card in cards if not card["dueComplete"]]
+             for card in cards if not card["dueComplete"] and card["due"]]
     return tasks
 
 
