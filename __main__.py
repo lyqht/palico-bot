@@ -17,7 +17,10 @@ from bot import weekly_reminder
 from settings import BOT_TOKEN
 from settings import HEROKU_APP_NAME
 from settings import OPERATION_MODE
-from settings import PORT
+from settings import BOT_PORT
+from settings import TELEGRAM_TEST_TELEGRAM_CHAT_ID
+
+from mqtt import mqtt_client
 
 from utils.date_utils import DATE_HELPER, FIRST_REMINDER_DAY
 
@@ -28,7 +31,8 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 if __name__ == "__main__":
-    # Initalize Updater
+    
+    # Initalize Bot Updater
     updater = Updater(token=BOT_TOKEN, use_context=True)
 
     if OPERATION_MODE == "dev":
@@ -44,7 +48,7 @@ if __name__ == "__main__":
             if not os.path.exists("data"):
                 os.mkdir("data")
             updater.start_webhook(listen="0.0.0.0",
-                                  port=PORT,
+                                  port=BOT_PORT,
                                   url_path=BOT_TOKEN)
             updater.bot.set_webhook("https://{}.herokuapp.com/{}".format(
                 HEROKU_APP_NAME, BOT_TOKEN))
@@ -63,8 +67,10 @@ if __name__ == "__main__":
 
     # Job Queue
 
-    job_queue = updater.job_queue
-    # TODO: Fix Job Queue restart upon waking up, causing a weekly reminder to be sent even when it is not time as the queue has been restarted.
+    # TODO: Fix Job Queue restart upon waking up, causing a weekly reminder to be sent even when it is not time 
+    # job_queue = updater.job_queue
+    # as the queue has been restarted.
+    
     # reminder_weekly_job = job_queue.run_repeating(
     #     weekly_reminder, DATE_HELPER.get_one_week_interval(), FIRST_REMINDER_DAY)
     # job_queue.start()
@@ -79,6 +85,16 @@ if __name__ == "__main__":
         CallbackQueryHandler(trello_member_selected_callback))
     dispatcher.add_handler(remind_group_handler)
     dispatcher.add_handler(unknown_handler)
-
+    
     # Start bot
     run(updater)
+    updater.bot.send_message(chat_id=TELEGRAM_TEST_TELEGRAM_CHAT_ID, text="Henlo Meowster! Palico-chan is at your service!")
+    
+    # MQTT Configuration
+    mqtt_client.bot = updater.bot
+    mqtt_client.client.loop_start()
+    
+    
+
+    
+
