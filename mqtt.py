@@ -1,5 +1,5 @@
 from settings import MQTT_IP, MQTT_PORT
-from settings import TELEGRAM_TEST_TELEGRAM_CHAT_ID
+from settings import TELEGRAM_TEST_TELEGRAM_CHAT_ID, HOUSE_ID
 import paho.mqtt.client as mqtt
     
 def on_connect(client, userdata, flags, rc):
@@ -26,7 +26,8 @@ def mqtt_on_msg_callback(client, userdata, msg):
         
     elif sensor_type == "Fall":
         print("Fall Detection MQTT Message received")
-        # TODO
+        # TODO for fall detection message
+        
     print("=============================")
 
 class MQTTClientForTelegramBot:
@@ -40,6 +41,7 @@ class MQTTClientForTelegramBot:
         client.connect(broker, port)
         self.client = client
         self.bot = None
+        self.subscribers = []
 
     def subscribe(self, topic):
         self.client.subscribe(topic)
@@ -47,11 +49,24 @@ class MQTTClientForTelegramBot:
         
     def send_message(self, msg):
         assert self.bot != None
-        print("Sending message")
-        self.bot.send_message(chat_id=TELEGRAM_TEST_TELEGRAM_CHAT_ID, text=msg)
+        print("Sending message from bot...")
+        for x in self.subscribers:
+            self.bot.send_message(chat_id=x, text=msg)
+            
+    def add_subscriber(self, chat_id):
+        self.subscribers.append(chat_id)
+        print("New Subscriber: ", chat_id)
+        print("Current number of subscribers :", len(self.subscribers))
+    
+    def remove_subscriber(self, chat_id):
+        self.subscribers.remove(chat_id)
+        print("Removing Subscriber: ", chat_id)
+        print("Current number of subscribers :", len(self.subscribers))
         
     
 mqtt_client = MQTTClientForTelegramBot(MQTT_IP, int(MQTT_PORT))
 roomtypes= ["livingroom", "bedroom", "outside", "kitchen"]
 for x in roomtypes:
-    mqtt_client.subscribe(topic="bps/testhouse/"+x)
+    mqtt_client.subscribe(topic="/".join(["bps", HOUSE_ID, x]))
+    mqtt_client.subscribe(topic="/".join(["mlx", HOUSE_ID, x]))
+    # TODO for fall detection topic
