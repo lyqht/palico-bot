@@ -1,5 +1,6 @@
-from dotenv import load_dotenv
 import os
+
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -27,3 +28,4 @@ MQTT_PORT = os.getenv("MQTT_PORT")
 MQTT_IP = os.getenv("MQTT_SERVER")
 HOUSE_ID = os.getenv("HOUSE_ID")
 DEMO_STATUS = os.getenv("DEMO_STATUS")
+
