@@ -1,11 +1,15 @@
-import requests
 import os.path
-from utils.json_utils import write_to_json
-from settings import TRELLO_KEY, TRELLO_TOKEN, TRELLO_BOARD_ID
+
+import requests
+
+from settings import TRELLO_BOARD_ID
+from settings import TRELLO_KEY
+from settings import TRELLO_TOKEN
 from utils.date_utils import DATE_HELPER
+from utils.json_utils import write_to_json
 
 
-class Task():
+class Task:
     def __init__(self, name, shortUrl, due, members=[]):
         self.name = name
         self.shortUrl = shortUrl
@@ -22,7 +26,8 @@ def get_board_lists():
 
 
 def get_board_members():
-    BOARD_MEMBERS_URL = "https://api.trello.com/1/boards/" + TRELLO_BOARD_ID + "/members"
+    BOARD_MEMBERS_URL = ("https://api.trello.com/1/boards/" + TRELLO_BOARD_ID +
+                         "/members")
     url = BOARD_MEMBERS_URL
     querystring = {"key": TRELLO_KEY, "token": TRELLO_TOKEN, "members": "none"}
     response = requests.request("GET", url, params=querystring)
@@ -43,8 +48,11 @@ def get_member_detail(members, user="", param="id"):
 def get_member_cards(memberID: str):
     BOARD_MEMBERS_CARD_URL = "https://api.trello.com/1/members/" + memberID + "/cards"
     url = BOARD_MEMBERS_CARD_URL
-    querystring = {"filters": "all", "key": TRELLO_KEY,
-                   "token": TRELLO_TOKEN, }
+    querystring = {
+        "filters": "all",
+        "key": TRELLO_KEY,
+        "token": TRELLO_TOKEN,
+    }
     response = requests.request("GET", url, params=querystring)
     return response.json()
 
@@ -79,7 +87,8 @@ def get_cards_due_two_weeks():
         if card["due"]:
             due_date = DATE_HELPER.get_datetime_from_card(card["due"])
             due_date = due_date.date()
-            return DATE_HELPER.in_sprint_range(due_date) and not card["dueComplete"]
+            return DATE_HELPER.in_sprint_range(
+                due_date) and not card["dueComplete"]
 
     cards = filter(target_card, cards)
     return list(cards)
@@ -91,8 +100,10 @@ def get_tasks_due_two_weeks():
 
 
 def make_tasks(cards):
-    tasks = [Task(card['name'], card['shortUrl'], card['due'], card['idMembers'])
-             for card in cards if not card["dueComplete"] and card["due"]]
+    tasks = [
+        Task(card["name"], card["shortUrl"], card["due"], card["idMembers"])
+        for card in cards if not card["dueComplete"] and card["due"]
+    ]
     return tasks
 
 
