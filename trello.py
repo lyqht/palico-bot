@@ -5,6 +5,22 @@ from settings import TRELLO_KEY, TRELLO_TOKEN, TRELLO_BOARD_ID
 from utils.date_utils import DATE_HELPER
 
 
+class Task():
+    def __init__(self, name, shortUrl, due, members=[]):
+        self.name = name
+        self.shortUrl = shortUrl
+        self.members = members
+        self.due = due
+
+
+def get_board_lists():
+    url = f"https://api.trello.com/1/boards/{TRELLO_BOARD_ID}/lists"
+    querystring = {"key": TRELLO_KEY, "token": TRELLO_TOKEN, "members": "none"}
+    response = requests.request("GET", url, params=querystring)
+    result = response.json()
+    return result
+
+
 def get_board_members():
     BOARD_MEMBERS_URL = "https://api.trello.com/1/boards/" + TRELLO_BOARD_ID + "/members"
     url = BOARD_MEMBERS_URL
@@ -33,18 +49,23 @@ def get_member_cards(memberID: str):
     return response.json()
 
 
-class Task():
-    def __init__(self, name, shortUrl, due, members=[]):
-        self.name = name
-        self.shortUrl = shortUrl
-        self.members = members
-        self.due = due
-
-
 def get_member_tasks(memberID: str):
     cards = get_member_cards(memberID)
 
     return make_tasks(cards)
+
+
+def get_filtered_boards(boards):
+    BOARD_LISTS = get_board_lists()
+    TO_DO_LISTS_ID = []
+    DONE_LISTS_ID = []
+
+    for board in BOARD_LISTS:
+        if "to-dos" in board["name"].lower():
+            TO_DO_LISTS_ID.append(board["id"])
+        elif "done" in board["name"].lower():
+            DONE_LISTS_ID.append(board["id"])
+    return TO_DO_LISTS_ID, DONE_LISTS_ID
 
 
 def get_cards_due_two_weeks():

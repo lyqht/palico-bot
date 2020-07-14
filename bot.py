@@ -1,16 +1,21 @@
-import trello
 import os
+
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ParseMode
 from telegram.ext import CallbackContext
-from telegram import ParseMode
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from settings import BOT_TOKEN, TRELLO_TOKEN, TELEGRAM_GROUP_CHAT_ID, TELEGRAM_TEST_TELEGRAM_CHAT_ID
+
+import trello
+from settings import (BOT_TOKEN, HOUSE_ID, TELEGRAM_GROUP_CHAT_ID,
+                      TELEGRAM_TEST_TELEGRAM_CHAT_ID, TRELLO_TOKEN, DEMO_STATUS)
 from utils.date_utils import DATE_HELPER
 from utils.progress_utils import get_progress
+from mqtt import mqtt_client
+
 
 # Paths
 
 MEMBERS_DATA_PATH = "data/members.json"
 TASKS_DATA_PATH = "data/tasks.json"
+MQTT_LOOP_ACTIVATED = False
 
 # UI functions
 
@@ -35,14 +40,9 @@ def formatted_text_for_trello_task(task, members):
         formatted_text = (
             f"    🔗[link]({task.shortUrl})\n")
     if len(members):
-      # TODO: format the members_text to parse without error,
-      # currently just giving the string the entire array which results in ("", "") being shown.
         members_text = " ".join([member for member in list(members)])
         formatted_text += f"    🍻({members})\n"
     return formatted_text
-
-# def formatted_text_for_gantt_task(task):
-# TODO:
 
 
 # Handler functions
@@ -52,8 +52,57 @@ def start_handler(update, context: CallbackContext):
     START_MESSAGE = "Henlo Meowster!"
     context.bot.send_message(
         chat_id=update.effective_chat.id, text=START_MESSAGE)
+    
+def status_subscribe_handler(update, context: CallbackContext):
+    global MQTT_LOOP_ACTIVATED
+    
+    current_chat_id = update.effective_chat.id
+    if DEMO_STATUS == "OFF":
+        MESSAGE = "Demo is currently Offline! Contact the Catstone Meowsters if you think this is a bug!"
+    
+    elif DEMO_STATUS == "ON":
+        
+        # MQTT Configuration
+        if current_chat_id not in mqtt_client.subscribers:
+            mqtt_client.add_subscriber(current_chat_id)
+            MESSAGE = "Activated Subscription to: " + HOUSE_ID
+        else:
+            MESSAGE = "Already subscribed to: " + HOUSE_ID
+            
+        if not MQTT_LOOP_ACTIVATED:
+            print("Starting MQTT loop")
+            mqtt_client.bot = context.bot
+            mqtt_client.client.loop_start()
+            MQTT_LOOP_ACTIVATED = True
+            
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text=MESSAGE)
 
-
+def status_unsubscribe_handler(update, context: CallbackContext):
+    global MQTT_LOOP_ACTIVATED
+    
+    if DEMO_STATUS == "OFF":
+        MESSAGE = "Demo is currently Offline! Contact the Catstone Meowsters if you think this is a bug!"
+    
+    elif DEMO_STATUS == "ON":
+        current_chat_id = update.effective_chat.id
+        if current_chat_id in mqtt_client.subscribers:
+            MESSAGE = "Deactivated Subscription to: " + HOUSE_ID
+            try:
+                mqtt_client.remove_subscriber(current_chat_id)
+            except ValueError:
+                pass
+        else:
+            MESSAGE = "Not subscribed to any house. Failed to unsubscribe."
+    
+    context.bot.send_message(
+        chat_id=update.effective_chat.id, text=MESSAGE)
+    
+    if len(mqtt_client.subscribers) == 0:
+        print("No more subscribers, Stopping MQTT Loop")
+        mqtt_client.client.loop_stop()
+        MQTT_LOOP_ACTIVATED = False
+        
 def unknown_handler(update, context: CallbackContext):
     IDK_MESSAGE = "Meow? I don't understand"
     context.bot.send_message(

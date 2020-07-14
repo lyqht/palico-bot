@@ -14,10 +14,13 @@ from bot import trello_member_selected_callback
 from bot import trello_tasks_handler
 from bot import unknown_handler
 from bot import weekly_reminder
+from bot import status_unsubscribe_handler
+from bot import status_subscribe_handler
 from settings import BOT_TOKEN
 from settings import HEROKU_APP_NAME
 from settings import OPERATION_MODE
-from settings import PORT
+from settings import BOT_PORT
+from settings import TELEGRAM_TEST_TELEGRAM_CHAT_ID, TELEGRAM_GROUP_CHAT_ID
 
 from utils.date_utils import DATE_HELPER, FIRST_REMINDER_DAY
 
@@ -28,7 +31,8 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 if __name__ == "__main__":
-    # Initalize Updater
+    
+    # Initalize Bot Updater
     updater = Updater(token=BOT_TOKEN, use_context=True)
 
     if OPERATION_MODE == "dev":
@@ -36,6 +40,7 @@ if __name__ == "__main__":
         def run(updater):
             print("Running in development mode")
             updater.start_polling()
+        chat_id_to_notify_when_bot_alive = TELEGRAM_TEST_TELEGRAM_CHAT_ID
 
     elif OPERATION_MODE == "prod":
 
@@ -44,10 +49,11 @@ if __name__ == "__main__":
             if not os.path.exists("data"):
                 os.mkdir("data")
             updater.start_webhook(listen="0.0.0.0",
-                                  port=PORT,
+                                  port=BOT_PORT,
                                   url_path=BOT_TOKEN)
             updater.bot.set_webhook("https://{}.herokuapp.com/{}".format(
                 HEROKU_APP_NAME, BOT_TOKEN))
+        chat_id_to_notify_when_bot_alive = TELEGRAM_GROUP_CHAT_ID
 
     else:
         logger.error("No MODE specified!")
@@ -59,12 +65,16 @@ if __name__ == "__main__":
     gantt_curr_week_handler = CommandHandler("gantt", gantt_curr_week_handler)
     trello_handler = CommandHandler("trello", trello_tasks_handler)
     remind_group_handler = CommandHandler("remindgroup", weekly_reminder)
+    subscribe_handler = CommandHandler("ondemo", status_subscribe_handler)
+    unsubscribe_handler = CommandHandler("offdemo", status_unsubscribe_handler)
     unknown_handler = MessageHandler(Filters.command, unknown_handler)
 
     # Job Queue
 
-    job_queue = updater.job_queue
-    # TODO: Fix Job Queue restart upon waking up, causing a weekly reminder to be sent even when it is not time as the queue has been restarted.
+    # TODO: Fix Job Queue restart upon waking up, causing a weekly reminder to be sent even when it is not time 
+    # job_queue = updater.job_queue
+    # as the queue has been restarted.
+    
     # reminder_weekly_job = job_queue.run_repeating(
     #     weekly_reminder, DATE_HELPER.get_one_week_interval(), FIRST_REMINDER_DAY)
     # job_queue.start()
@@ -78,7 +88,18 @@ if __name__ == "__main__":
     dispatcher.add_handler(
         CallbackQueryHandler(trello_member_selected_callback))
     dispatcher.add_handler(remind_group_handler)
+    dispatcher.add_handler(subscribe_handler)
+    dispatcher.add_handler(unsubscribe_handler)
     dispatcher.add_handler(unknown_handler)
-
+    
     # Start bot
     run(updater)
+    
+    updater.bot.send_message(chat_id=chat_id_to_notify_when_bot_alive, text="Henlo Meowster! Palico-chan is at your service!")
+    
+    
+    
+    
+
+    
+
