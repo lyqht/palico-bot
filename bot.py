@@ -15,6 +15,7 @@ from settings import TELEGRAM_TEST_TELEGRAM_CHAT_ID
 from settings import TRELLO_TOKEN
 from utils.date_utils import DATE_HELPER
 from utils.progress_utils import get_progress
+from mqtt import mqtt_client
 
 # Paths
 
@@ -62,7 +63,6 @@ def status_subscribe_handler(update, context: CallbackContext):
         MESSAGE = "Demo is currently Offline! Contact the Catstone Meowsters if you think this is a bug!"
 
     elif DEMO_STATUS == "ON":
-
         # MQTT Configuration
         if current_chat_id not in mqtt_client.subscribers:
             mqtt_client.add_subscriber(current_chat_id)
@@ -84,7 +84,7 @@ def status_unsubscribe_handler(update, context: CallbackContext):
 
     if DEMO_STATUS == "OFF":
         MESSAGE = "Demo is currently Offline! Contact the Catstone Meowsters if you think this is a bug!"
-
+        
     elif DEMO_STATUS == "ON":
         current_chat_id = update.effective_chat.id
         if current_chat_id in mqtt_client.subscribers:

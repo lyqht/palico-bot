@@ -25,6 +25,22 @@ def get_board_lists():
     return result
 
 
+class Task():
+    def __init__(self, name, shortUrl, due, members=[]):
+        self.name = name
+        self.shortUrl = shortUrl
+        self.members = members
+        self.due = due
+
+
+def get_board_lists():
+    url = f"https://api.trello.com/1/boards/{TRELLO_BOARD_ID}/lists"
+    querystring = {"key": TRELLO_KEY, "token": TRELLO_TOKEN, "members": "none"}
+    response = requests.request("GET", url, params=querystring)
+    result = response.json()
+    return result
+
+
 def get_board_members():
     BOARD_MEMBERS_URL = ("https://api.trello.com/1/boards/" + TRELLO_BOARD_ID +
                          "/members")

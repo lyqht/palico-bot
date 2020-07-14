@@ -32,7 +32,6 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 if __name__ == "__main__":
-
     # Initalize Bot Updater
     updater = Updater(token=BOT_TOKEN, use_context=True)
 
@@ -41,6 +40,7 @@ if __name__ == "__main__":
         def run(updater):
             print("Running in development mode")
             updater.start_polling()
+        chat_id_to_notify_when_bot_alive = TELEGRAM_TEST_TELEGRAM_CHAT_ID
 
         chat_id_to_notify_when_bot_alive = TELEGRAM_TEST_TELEGRAM_CHAT_ID
 
@@ -55,6 +55,7 @@ if __name__ == "__main__":
                                   url_path=BOT_TOKEN)
             updater.bot.set_webhook("https://{}.herokuapp.com/{}".format(
                 HEROKU_APP_NAME, BOT_TOKEN))
+        chat_id_to_notify_when_bot_alive = TELEGRAM_GROUP_CHAT_ID
 
         chat_id_to_notify_when_bot_alive = TELEGRAM_GROUP_CHAT_ID
 
@@ -72,12 +73,9 @@ if __name__ == "__main__":
     unsubscribe_handler = CommandHandler("offdemo", status_unsubscribe_handler)
     unknown_handler = MessageHandler(Filters.command, unknown_handler)
 
-    # Job Queue
-
     # TODO: Fix Job Queue restart upon waking up, causing a weekly reminder to be sent even when it is not time
     # job_queue = updater.job_queue
     # as the queue has been restarted.
-
     # reminder_weekly_job = job_queue.run_repeating(
     #     weekly_reminder, DATE_HELPER.get_one_week_interval(), FIRST_REMINDER_DAY)
     # job_queue.start()
@@ -94,10 +92,9 @@ if __name__ == "__main__":
     dispatcher.add_handler(subscribe_handler)
     dispatcher.add_handler(unsubscribe_handler)
     dispatcher.add_handler(unknown_handler)
-
+    
     # Start bot
     run(updater)
-
     updater.bot.send_message(
         chat_id=chat_id_to_notify_when_bot_alive,
         text="Henlo Meowster! Palico-chan is at your service!",

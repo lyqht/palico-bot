@@ -55,7 +55,7 @@ class MQTTClientForTelegramBot:
     def subscribe(self, topic):
         self.client.subscribe(topic)
         print("Subscribed to topic:", topic)
-
+        
     def send_message(self, msg):
         assert self.bot != None
         print("Sending message from bot...")
@@ -72,7 +72,7 @@ class MQTTClientForTelegramBot:
         print("Removing Subscriber: ", chat_id)
         print("Current number of subscribers :", len(self.subscribers))
 
-
+        
 mqtt_client = MQTTClientForTelegramBot(MQTT_IP, int(MQTT_PORT))
 roomtypes = ["livingroom", "bedroom", "outside", "kitchen"]
 for x in roomtypes:
