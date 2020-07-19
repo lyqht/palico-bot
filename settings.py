@@ -22,10 +22,13 @@ BOT_PORT = int(os.getenv("BOT_PORT"))
 OPERATION_MODE = os.getenv("OPERATION_MODE")
 
 TELEGRAM_GROUP_CHAT_ID = os.getenv("TELEGRAM_GROUP_CHAT_ID")
+
 TELEGRAM_TEST_TELEGRAM_CHAT_ID = os.getenv("TEST_TELEGRAM_CHAT_ID")
+
 
 MQTT_PORT = os.getenv("MQTT_PORT")
 MQTT_IP = os.getenv("MQTT_SERVER")
 HOUSE_ID = os.getenv("HOUSE_ID")
 DEMO_STATUS = os.getenv("DEMO_STATUS")
+
 

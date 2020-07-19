@@ -32,10 +32,14 @@ def mqtt_on_msg_callback(client, userdata, msg):
         mqtt_client.send_message("Current Room that the user is in: " +
                                  room_type)
 
-    elif sensor_type == "Fall":
+    if msg.topic == "fall":
         print("Fall Detection MQTT Message received")
-        # TODO for fall detection message
-
+        #Dissecting the payload to the three different components
+        date, time, label = m_decode.split(";")
+        #Futher splitting the label component to get the actual label of 0 or 1.
+        label = label.split(":")
+        if label[1] == "1":
+            mqtt_client.send_message("A FALL HAS BEEN DETECTED!")
     print("=============================")
 
 
@@ -78,4 +82,6 @@ roomtypes = ["livingroom", "bedroom", "outside", "kitchen"]
 for x in roomtypes:
     mqtt_client.subscribe(topic="/".join(["bps", HOUSE_ID, x]))
     mqtt_client.subscribe(topic="/".join(["mlx", HOUSE_ID, x]))
-    # TODO for fall detection topic
+    
+# Sub to fall topic
+mqtt_client.subscribe(topic="fall")

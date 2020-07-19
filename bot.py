@@ -51,6 +51,7 @@ def formatted_text_for_trello_task(task, members):
 
 def start_handler(update, context: CallbackContext):
     START_MESSAGE = "Henlo Meowster!"
+    print(update.effective_chat.id)
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=START_MESSAGE)
 
